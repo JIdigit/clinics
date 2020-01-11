@@ -92,7 +92,7 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a class="active" href="index.html">home</a></li>
-                                    <li><a href="Department.html">Department</a></li>
+                                    <li><a href="{% url 'clinics_list_view' %}">Наши Клиники</a></li>
                                     <li><a href="#">blog <i class="ti-angle-down"></i></a>
                                         <ul class="submenu">
                                             <li><a href="blog.html">blog</a></li>
@@ -105,7 +105,7 @@
                                             <li><a href="about.html">about</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="Doctors.html">Doctors</a></li>
+                                    <li><a href="{% url 'doctor_list' %}">Doctors</a></li>
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </nav>
@@ -132,6 +132,38 @@
 
 
 {% endblock %}
+
+<!-- Emergency_contact start -->
+<div class="Emergency_contact">
+    <div class="conatiner-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-xl-6">
+                <div class="single_emergency d-flex align-items-center justify-content-center emergency_bg_1 overlay_skyblue">
+                    <div class="info">
+                        <h3>For Any Emergency Contact</h3>
+                        <p>Esteem spirit temper too say adieus.</p>
+                    </div>
+                    <div class="info_button">
+                        <a href="#" class="boxed-btn3-white">+10 378 4673 467</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="single_emergency d-flex align-items-center justify-content-center emergency_bg_2 overlay_skyblue">
+                    <div class="info">
+                        <h3>Make an Online Appointment</h3>
+                        <p>Esteem spirit temper too say adieus.</p>
+                    </div>
+                    <div class="info_button">
+                        <a href="#" class="boxed-btn3-white">Make an Appointment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Emergency_contact end -->
+
 <!-- footer start -->
 <footer class="footer">
     <div class="footer_top">

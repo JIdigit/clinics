@@ -2,7 +2,14 @@ from django.shortcuts import render, HttpResponse
 from .forms import DoctorLoginForm, DoctorRegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView, ListView
-from .models import Doctor
+from .models import Doctor, Clinic
+from django.contrib.auth.models import User
+import random
+import string
+
+
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 class HomePageView(TemplateView):
@@ -38,20 +45,41 @@ def register(request):
         user_form = DoctorRegisterForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
-            new_user.set_password(user_form.cleaned_data['password'])
-            new_user.save()
+            username = user_form.cleaned_data['username']
+            name = user_form.cleaned_data['name']
+            surname = user_form.cleaned_data['surname']
+            clinic_id = user_form.cleaned_data['clinic']
+            # clinic = user_form.cleaned_data['clinic']
+            # new_user.set_password(user_form.cleaned_data['password'])
+            # new_user.save()
             login(request, new_user)
-            try:
-                Doctor.objects.create(user=new_user)
-            except:
-                return render(request,
-                              'home.html',
-                              {'new_user': new_user})
+            Doctor.objects.create(name=name, surname=surname, slug=rand_slug(), clinic_id=clinic_id)
+            User.objects.create(username=username,password=user_form.password, first_name=name, last_name=surname, email=None).save()
+                                  # clinic_id=clinic, slug=rand_slug()).save()
+            return render(request,
+                          'home.html',
+                          {'new_user': new_user})
     else:
         user_form = DoctorRegisterForm()
     return render(request,
                   'account/register.html',
                   {'form': user_form})
+
+
+class ClinicsListView(ListView):
+    model = Clinic
+    template_name = 'clinics.html'
+    context_object_name = 'clinics'
+
+
+class DoctorListView(ListView):
+    model = Doctor
+    template_name = 'doctor_list.html'
+    context_object_name = 'doctors'
+
+
+def test(request):
+    return render(request, 'Doctors.html')
 
 
 
